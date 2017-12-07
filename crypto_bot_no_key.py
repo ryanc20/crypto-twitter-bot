@@ -40,23 +40,19 @@ def get_crypto_information():
 
 	neo_api = urlopen("https://api.coinmarketcap.com/v1/ticker/neo")
 	neo_data = json.load(neo_api)
-	
-	ripple_api = urlopen("https://api.coinmarketcap.com/v1/ticker/ripple")
-	ripple_data = json.load(ripple_api)
 
 	bitcoin_price = '${0:.2f}'.format(float(bitcoin_data[0]['price_usd']))
 	ethereum_price = '${0:.2f}'.format(float(ethereum_data[0]['price_usd']))
 	litecoin_price = '${0:.2f}'.format(float(litecoin_data[0]['price_usd']))
 	neo_price = '${0:.2f}'.format(float(neo_data[0]['price_usd']))
-	ripple_price = '${0:.2f}'.format(float(ripple_data[0]['price_usd']))
-	return bitcoin_price, ethereum_price, litecoin_price, neo_price, ripple_price
+	return bitcoin_price, ethereum_price, litecoin_price, neo_price
 
 api = get_api_access()
-bitcoin_price, ethereum_price, litecoin_price, neo_price, ripple_price = get_crypto_information()
-
-message = "My cryptos current prices:\n\nBitcoin: " + bitcoin_price +"\nEthereum: " + ethereum_price + "\nLitecoin: " + litecoin_price + "\nNEO: " + neo_price + "\nRipple: " + ripple_price + "\n\nSee you in 4 hours!"
 
 while True:
 	#Sends a tweet out every 4 hours FOREVER.
+	bitcoin_price, ethereum_price, litecoin_price, neo_price = get_crypto_information()
+	message = "My cryptos current prices:\n\nBitcoin: " + bitcoin_price +"\nEthereum: " + ethereum_price + "\nLitecoin: " + litecoin_price + "\nNEO: " + neo_price + "\n\nSee you in 4 hours!"
+	
 	api.update_status(status=message)
 	time.sleep(14400)
